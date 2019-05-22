@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import * as d3 from "d3";
+import { select } from 'd3-selection';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  componentDidMount() {
+    select('.d3').append('p').text('Hi, what\'s up');
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>D3 Practice</h1>
+        <div className='d3' />
+      </div>
+    );
+  }
 }
 
 export default App;
