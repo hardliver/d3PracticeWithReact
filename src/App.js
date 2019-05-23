@@ -6,19 +6,30 @@ import { select } from 'd3-selection';
 class App extends Component {
 
   componentDidMount() {
-    let dataArray = [20, 40, 50];
+    let dataArray = [5, 40, 50, 60];
+    let width = 500;
+    let height = 500;
+
+    let widthScale = d3.scaleLinear()
+      .domain([0, 60])
+      .range([0, width]);
+
+    let color = d3.scaleLinear()
+      .domain([0, 60])
+      .range(['red', 'blue']);
 
     let canvas = select('.d3')
       .append('svg')
-      .attr('width', 500)
-      .attr('height', 500);
+      .attr('width', width)
+      .attr('height', height);
 
     let bars = canvas.selectAll('rect')
       .data(dataArray)
       .enter()
         .append('rect')
-        .attr('width', (d) => { return d*10; })
+        .attr('width', (d) => { return widthScale(d); })
         .attr('height', 50)
+        .attr('fill', (d) => { return color(d) })
         .attr('y', (d, i) => { return i*100 });
   }
 
