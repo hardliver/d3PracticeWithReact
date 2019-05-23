@@ -6,41 +6,30 @@ import { select } from 'd3-selection';
 class App extends Component {
 
   componentDidMount() {
-    let dataArray = [5, 40, 50, 60];
-    let width = 500;
-    let height = 500;
 
-    let widthScale = d3.scaleLinear()
-      .domain([0, 60])
-      .range([0, width]);
-
-    let color = d3.scaleLinear()
-      .domain([0, 60])
-      .range(['red', 'blue']);
-
-    let axis = d3.axisBottom()
-      .ticks(5)
-      .scale(widthScale);
+    let data = [10];
 
     let canvas = select('.d3')
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .append('g')
-      .attr('transform', 'translate(20, 0)');
+      .attr('width', 500)
+      .attr('height', 500);
 
-    let bars = canvas.selectAll('rect')
-      .data(dataArray)
-      .enter()
-        .append('rect')
-        .attr('width', (d) => { return widthScale(d); })
-        .attr('height', 50)
-        .attr('fill', (d) => { return color(d) })
-        .attr('y', (d, i) => { return i*100 });
+    let circle1 = canvas.append('circle')
+      .attr('cx', 50)
+      .attr('cy', 100)
+      .attr('r', 25);
 
-    canvas.append('g')
-      .attr('transform', 'translate(0, 400)')
-      .call(axis);
+    let circle2 = canvas.append('circle')
+      .attr('cx', 50)
+      .attr('cy', 200)
+      .attr('r', 25);
+
+    let circles = canvas.selectAll('circle')
+      .data(data)
+      .attr('fill', 'green')
+      .exit()
+        .attr('fill', 'blue');
+
   }
 
   render() {
