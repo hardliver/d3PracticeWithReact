@@ -18,10 +18,16 @@ class App extends Component {
       .domain([0, 60])
       .range(['red', 'blue']);
 
+    let axis = d3.axisBottom()
+      .ticks(5)
+      .scale(widthScale);
+
     let canvas = select('.d3')
       .append('svg')
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height)
+      .append('g')
+      .attr('transform', 'translate(20, 0)');
 
     let bars = canvas.selectAll('rect')
       .data(dataArray)
@@ -31,6 +37,10 @@ class App extends Component {
         .attr('height', 50)
         .attr('fill', (d) => { return color(d) })
         .attr('y', (d, i) => { return i*100 });
+
+    canvas.append('g')
+      .attr('transform', 'translate(0, 400)')
+      .call(axis);
   }
 
   render() {
