@@ -3,30 +3,42 @@ import './App.css';
 import * as d3 from "d3";
 import { select } from 'd3-selection';
 
+import data from './data/data.json'
+
 class App extends Component {
 
-  componentDidMount() {
+  state = {
+    people: []
+  }
 
+  componentWillMount() {
+    this.setState({
+      people: data
+    })
+  }
+
+  componentDidMount() {
     let canvas = select('.d3')
       .append('svg')
       .attr('width', 500)
-      .attr('height', 500);
+      .attr('height', 500)
 
-    let circle = canvas.append('circle')
-      .attr('cx', 50)
-      .attr('cy', 50)
-      .attr('r', 25);
+    canvas.selectAll('rect')
+      .data(this.state.people)
+      .enter()
+        .append('rect')
+        .attr('width', (d) => { return d.age * 10; })
+        .attr('height', 48)
+        .attr('y', (d, i) => { return i * 50; })
+        .attr('fill', 'blue');
 
-    circle.transition()
-      .duration(1500)
-      .delay(1000)
-      .attr('cx', 150)
-      // .transition()
-      // .attr('cy', 200)
-      // .transition()
-      // .attr('cx', 50)
-      .on('end', function() { select(this).attr('fill', 'red'); });
-
+    canvas.selectAll('text')
+      .data(this.state.people)
+      .enter()
+        .append('text')
+        .attr('fill', 'white')
+        .attr('y', (d, i) => { return i * 50 + 24; })
+        .text((d) => { return d.name })
   }
 
   render() {
