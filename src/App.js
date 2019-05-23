@@ -11,27 +11,21 @@ class App extends Component {
       .attr('width', 500)
       .attr('height', 500);
 
-    let data = [
-      {x: 10, y: 20},
-      {x: 40, y: 60},
-      {x: 50, y: 70}
-    ];
-
     let group = canvas.append('g')
       .attr('transform', "translate(100, 100)")
 
-    let line = d3.line()
-      .x((d) => { return d.x; })
-      .y((d) => { return d.y; });
+    let r = 100;
+    let p = Math.PI * 2;
 
-    group.selectAll('path')
-      .data([data])
-      .enter()
-        .append('path')
-        .attr('d', line)
-        .attr('fill', 'none')
-        .attr('stroke', '#000')
-        .attr('stroke-width', 10);
+    let arc = d3.arc()
+      .innerRadius(r - 20)
+      .outerRadius(r)
+      .startAngle(0)
+      .endAngle(p)
+
+    group.append('path')
+      .attr('d', arc)
+
   }
 
   render() {
