@@ -7,28 +7,25 @@ class App extends Component {
 
   componentDidMount() {
 
-    let data = [10];
-
     let canvas = select('.d3')
       .append('svg')
       .attr('width', 500)
       .attr('height', 500);
 
-    let circle1 = canvas.append('circle')
+    let circle = canvas.append('circle')
       .attr('cx', 50)
-      .attr('cy', 100)
+      .attr('cy', 50)
       .attr('r', 25);
 
-    let circle2 = canvas.append('circle')
-      .attr('cx', 50)
-      .attr('cy', 200)
-      .attr('r', 25);
-
-    let circles = canvas.selectAll('circle')
-      .data(data)
-      .attr('fill', 'green')
-      .exit()
-        .attr('fill', 'blue');
+    circle.transition()
+      .duration(1500)
+      .delay(1000)
+      .attr('cx', 150)
+      // .transition()
+      // .attr('cy', 200)
+      // .transition()
+      // .attr('cx', 50)
+      .on('end', function() { select(this).attr('fill', 'red'); });
 
   }
 
