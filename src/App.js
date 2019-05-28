@@ -6,25 +6,42 @@ import { select } from 'd3-selection';
 class App extends Component {
 
   componentDidMount() {
+    let data = [10, 50, 80];
+    let r = 300;
+
+    let color = d3.scaleOrdinal()
+      .range(['red', 'blue', 'orange']);
+
     let canvas = select('.d3')
       .append('svg')
-      .attr('width', 500)
-      .attr('height', 500);
+      .attr('width', 1500)
+      .attr('height', 1500);
 
     let group = canvas.append('g')
-      .attr('transform', "translate(100, 100)")
-
-    let r = 100;
-    let p = Math.PI * 2;
+      .attr('transform', 'translate(300, 300)');
 
     let arc = d3.arc()
-      .innerRadius(r - 20)
-      .outerRadius(r)
-      .startAngle(0)
-      .endAngle(p)
+      .innerRadius(0)
+      .outerRadius(r);
 
-    group.append('path')
+    let pie = d3.pie()
+      .value((d) => { return d; });
+
+    let arcs = group.selectAll('.arc')
+      .data(pie(data))
+      .enter()
+      .append('g')
+      .attr('class', 'arc');
+
+    arcs.append('path')
       .attr('d', arc)
+      .attr('fill', (d) => { return color(d.data); });
+
+    arcs.append('text')
+      .attr('transform', (d) => { return 'translate(' + arc.centroid(d) + ')';})
+      .attr('text-anchor', 'middle')
+      .attr('font-size', '1.5em')
+      .text((d) => { return d.data; });
 
   }
 
